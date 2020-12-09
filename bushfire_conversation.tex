@@ -1,0 +1,206 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  11pt,
+  a4paper,
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Yes, 2019-2020 Victorian bushfires were most likely caused by lightning but there's more to be learned from open data},
+  pdfauthor={Di Cook, Weihao Li, Emily Dodwell},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+%% Any special functions or other packages can be loaded here.
+
+\usepackage[no-weekday]{eukdate}
+\usepackage{sourceserifpro}
+\usepackage[scaled=0.86]{DejaVuSansMono}
+\usepackage{float,bm,setspace}
+\setstretch{1.2}
+
+%% CAPTIONS
+\RequirePackage{caption}
+\DeclareCaptionStyle{italic}[justification=centering]
+ {labelfont={bf},textfont={it},labelsep=colon}
+\captionsetup[figure]{style=italic,format=hang,singlelinecheck=true}
+\captionsetup[table]{style=italic,format=hang,singlelinecheck=true}
+
+%% GRAPHICS
+\RequirePackage{graphicx}
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.15}
+\renewcommand{\floatpagefraction}{0.8}
+
+%% BIBLIOGRAPHY
+
+\makeatletter
+\@ifpackageloaded{biblatex}{}{\usepackage[style=authoryear-comp, backend=biber, natbib=true]{biblatex}}
+\makeatother
+\ExecuteBibliographyOptions{bibencoding=utf8,minnames=1,maxnames=3, maxbibnames=99,dashed=false,terseinits=true,giveninits=true,uniquename=false,uniquelist=false,doi=false, isbn=false,url=true,sortcites=false}
+
+\DeclareFieldFormat{url}{\texttt{\url{#1}}}
+\DeclareFieldFormat[article]{pages}{#1}
+\DeclareFieldFormat[inproceedings]{pages}{\lowercase{pp.}#1}
+\DeclareFieldFormat[incollection]{pages}{\lowercase{pp.}#1}
+\DeclareFieldFormat[article]{volume}{\mkbibbold{#1}}
+\DeclareFieldFormat[article]{number}{\mkbibparens{#1}}
+\DeclareFieldFormat[article]{title}{\MakeCapital{#1}}
+\DeclareFieldFormat[inproceedings]{title}{#1}
+\DeclareFieldFormat{shorthandwidth}{#1}
+% No dot before number of articles
+\usepackage{xpatch}
+\xpatchbibmacro{volume+number+eid}{\setunit*{\adddot}}{}{}{}
+% Remove In: for an article.
+\renewbibmacro{in:}{%
+  \ifentrytype{article}{}{%
+  \printtext{\bibstring{in}\intitlepunct}}}
+
+\makeatletter
+\DeclareDelimFormat[cbx@textcite]{nameyeardelim}{\addspace}
+\makeatother
+\renewcommand*{\finalnamedelim}{%
+  %\ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}% there really should be no funny Oxford comma business here
+  \addspace\&\space}
+\usepackage[style=authoryear-comp,]{biblatex}
+\addbibresource{references.bib}
+
+\title{Yes, 2019-2020 Victorian bushfires were most likely caused by lightning but there's more to be learned from open data}
+\author{Di Cook, Weihao Li, Emily Dodwell}
+\date{}
+
+\begin{document}
+\maketitle
+
+\hypertarget{intro}{%
+\section{Introduction}\label{intro}}
+
+The 2019-2020 Australia bushfires, compared with other major bushfires in history, had a more devastating impact on the environment and properties. According to a report by Lisa Richards, Nigel Brew and Smith (2020), published by the Parliament of Australia, 3094 houses were destroyed and over 17M hectares of land burned. These two figures are the highest in history.
+
+Discussion about the cause of this crisis became a focal point on social media at the very beginning of the bushfire season. A group of people argued that climate change had a major impact on the catastrophic and unprecedented bushfires. One of the hashtags they used on twitter to convey their beliefs and promote action on climate change was \#ClimateEmergency (Graham and Keller, 2020). Climate Council, which was one of the biggest climate organizations in Australia and was made up of climate scientists and experts, claimed that climate change not only worsened the bushfire season but also increased our cost of fighting fires (Climate Council, 2019). Meanwhile, in the first few weeks of 2020, another group of people brought a completely different argument onto the table. They claimed the cause of this bushfire season was not climate change, but arson. Besides, they attempted to replace the \#ClimateEmergency hashtag with the \#ArsonEmergency hashtag (Graham and Keller, 2020). Although police (Knaus, 2020) contradicted this controversial claim immediately, the spread didn't slow down at all. A research did by Dr Timothy Graham and Dr Tobias R. Keller (2020) from the Queensland University of Technology assessed around 300 twitter accounts driving the \#ArsonEmergency hashtag and found that a third of the accounts were suspicious with automated and inauthentic behaviour. They believed that the accounts were very likely ran by disinformation campaigns.
+
+By far, we have limited information on the cause of this catastrophic hazard in 2019-2020 (2019-20 Australian bushfires-frequently asked
+questions: a quick guide.). Bushfire investigation usually takes time and the result is not guaranteed. According to the research by Beale and Jones (2011), the cause was only known for 58.9\% of fires in history. Among the known cases, about 13\% were due to deliberate ignitions, 35\% by accidents and 6\% by natural, such as lightning. In a Jan 11, 2020 ABC article ``The truth about Australia's fires --- arsonists aren't responsible for many this season'' reports about Victoria:
+
+\begin{quote}
+``The Country Fire Authority (CFA) said the majority of fires were not arson-related. `Most of the fires have been caused by lightning,'' said Brett Mitchell, the CFA incident controller in Bairnsdale, in East Gippsland. Our intelligence suggests there are no deliberate lightings that we are aware of. Victoria Police had no arson figures available for this bushfire season, but said in the 12 months to September 2019, a dozen people had been arrested for causing bushfires."
+\end{quote}
+
+\hypertarget{data}{%
+\section{Data sources and collation}\label{data}}
+
+Needs a couple of paragraphs describing the data sources.
+
+\hypertarget{models}{%
+\section{Modeling}\label{models}}
+
+\hypertarget{ignition}{%
+\subsection{Determining fire ignition point}\label{ignition}}
+
+Quick overview of spatiotemporal clustering algorithm
+
+\hypertarget{predicting-cause}{%
+\subsection*{Predicting cause}\label{predicting-cause}}
+\addcontentsline{toc}{subsection}{Predicting cause}
+
+Historical data
+
+Forest model
+
+Important predictors
+
+\hypertarget{results}{%
+\subsection{Results}\label{results}}
+
+bar chart of causes
+
+Maps of predicted causes by month showing arson and accident
+
+\hypertarget{validation-of-predictions}{%
+\section*{Validation of predictions}\label{validation-of-predictions}}
+\addcontentsline{toc}{section}{Validation of predictions}
+
+Show somewhere that it looks right?
+
+Our predictions might disagree with this:
+
+French Island likely due to dry lightning
+\url{http://www.mpnews.com.au/2020/01/21/all-clear-after-island-fire-fright/}
+
+zoom into map from app
+
+\hypertarget{acknowledgements}{%
+\section{Acknowledgements}\label{acknowledgements}}
+
+This analysis is based on a research paper co-authored by Di Cook from the Department of Econometrics and Business Statistics at the Monash Business School, and Weihao Li, a former Monash University Honours student in econometrics. The full analysis is available at \url{https://github.com/TengMCing/bushfire-conversation}.
+
+The code used for the analysis can be found in the github repository \href{https://github.com/TengMCing/thesis}{github.com/TengMCing/thesis}.
+
+You can explore the historical fire data, predictions for 2019-2020 fires and a fire risk map for Victoria using the shiny app at \href{https://ebsmonash.shinyapps.io/VICfire/}{ebsmonash.shinyapps.io/VICfire/}
+
+\printbibliography
+
+\end{document}

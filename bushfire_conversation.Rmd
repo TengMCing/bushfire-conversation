@@ -1,0 +1,95 @@
+---
+title: "Yes, 2019-2020 Victorian bushfires were most likely caused by lightning but there's more to be learned from open data"
+author: Di Cook, Weihao Li, Emily Dodwell
+toc: false
+bibliography: references.bib
+biblio-style: authoryear-comp
+fontsize: 11pt
+papersize: a4
+output:
+  bookdown::pdf_document2:
+    fig_caption: yes
+    fig_height: 3
+    fig_width: 8
+    includes:
+      in_header: conversation_preamble.tex
+    keep_tex: yes
+    number_sections: yes
+    citation_package: biblatex
+---
+
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  fig.pos = "H",
+  fig.align = "center",
+  cache = FALSE,
+  message = FALSE
+)
+library(tidyverse)
+library(forcats)
+#library(ggthemes)
+library(knitr)
+#library(patchwork)
+#library(gridExtra)
+#library(grid)
+```
+
+# Introduction {#intro}
+
+The 2019-2020 Australia bushfires, compared with other major bushfires in history, had a more devastating impact on the environment and properties. According to a report by Lisa Richards, Nigel Brew and Smith (2020), published by the Parliament of Australia, 3094 houses were destroyed and over 17M hectares of land burned. These two figures are the highest in history. 
+
+Discussion about the cause of this crisis became a focal point on social media at the very beginning of the bushfire season. A group of people argued that climate change had a major impact on the catastrophic and unprecedented bushfires. One of the hashtags they used on twitter to convey their beliefs and promote action on climate change was #ClimateEmergency (Graham and Keller, 2020). Climate Council, which was one of the biggest climate organizations in Australia and was made up of climate scientists and experts, claimed that climate change not only worsened the bushfire season but also increased our cost of fighting fires (Climate Council, 2019). Meanwhile, in the first few weeks of 2020, another group of people brought a completely different argument onto the table. They claimed the cause of this bushfire season was not climate change, but arson. Besides, they attempted to replace the #ClimateEmergency hashtag with the #ArsonEmergency hashtag (Graham and Keller, 2020). Although police (Knaus, 2020) contradicted this controversial claim immediately, the spread didn’t slow down at all. A research did by Dr Timothy Graham and Dr Tobias R. Keller (2020) from the Queensland University of Technology assessed around 300 twitter accounts driving the #ArsonEmergency hashtag and found that a third of the accounts were suspicious with automated and inauthentic behaviour. They believed that the accounts were very likely ran by disinformation campaigns.
+
+By far, we have limited information on the cause of this catastrophic hazard in 2019-2020 (2019-20 Australian bushfires-frequently asked
+questions: a quick guide.). Bushfire investigation usually takes time and the result is not guaranteed. According to the research by Beale and Jones (2011), the cause was only known for 58.9% of fires in history. Among the known cases, about 13% were due to deliberate ignitions, 35% by accidents and 6% by natural, such as lightning. In a Jan 11, 2020 ABC article "The truth about Australia's fires — arsonists aren't responsible for many this season" reports about Victoria:
+
+> "The Country Fire Authority (CFA) said the majority of fires were not arson-related. `Most of the fires have been caused by lightning," said Brett Mitchell, the CFA incident controller in Bairnsdale, in East Gippsland. Our intelligence suggests there are no deliberate lightings that we are aware of.  Victoria Police had no arson figures available for this bushfire season, but said in the 12 months to September 2019, a dozen people had been arrested for causing bushfires."
+
+<!-- We often hear commentary about voting patterns --- people in their 20s without kids are more likely to be left wing, migrants are more conservative, wealthier people tend to favour the conservative parties, and so on. These might be built on myth and stereotypes. There is open data available from each election and from regular national censuses; this data can be used to examine just what are the indicators for voting tendency.
+
+Voting tendencies can change over time. For example, if wealth was a good predictor of conservative voting in the 2001 election, is it still a good predictor in 2019? Australia has changed in many ways over the last two decades. Rising house prices, country-wide improvements in education, an ageing population, and a decline in religious affiliation, are just some of the ways we have changed. At the same time, political power has moved back and forth between the two major parties. How much can we attribute changes in political power to changes in who we are?-->
+
+# Data sources and collation {#data}
+
+Needs a couple of paragraphs describing the data sources.
+
+# Modeling {#models}
+
+## Determining fire ignition point {#ignition}
+
+Quick overview of spatiotemporal clustering algorithm
+
+## Predicting cause {-}
+
+Historical data
+
+Forest model 
+
+Important predictors
+
+## Results
+
+bar chart of causes
+
+Maps of predicted causes by month showing arson and accident
+
+# Validation of predictions {-}
+
+Show somewhere that it looks right?
+
+Our predictions might disagree with this:
+
+French Island likely due to dry lightning
+http://www.mpnews.com.au/2020/01/21/all-clear-after-island-fire-fright/
+
+zoom into map from app
+
+
+# Acknowledgements
+
+This analysis is based on a research paper co-authored by Di Cook from the Department of Econometrics and Business Statistics at the Monash Business School, and Weihao Li, a former Monash University Honours student in econometrics. The full analysis is available at https://github.com/TengMCing/bushfire-conversation.
+
+The code used for the analysis can be found in the github repository [github.com/TengMCing/thesis](https://github.com/TengMCing/thesis).
+
+You can explore the historical fire data, predictions for 2019-2020 fires and a fire risk map for Victoria using the shiny app at [ebsmonash.shinyapps.io/VICfire/](https://ebsmonash.shinyapps.io/VICfire/)
