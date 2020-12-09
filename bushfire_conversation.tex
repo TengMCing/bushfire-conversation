@@ -138,50 +138,33 @@
 \hypertarget{intro}{%
 \section{Introduction}\label{intro}}
 
-The 2019-2020 Australia bushfires, compared with other major bushfires in history, had a more devastating impact on the environment and properties. According to a report by Lisa Richards, Nigel Brew and Smith (2020), published by the Parliament of Australia, 3094 houses were destroyed and over 17M hectares of land burned. These two figures are the highest in history.
-
-Discussion about the cause of this crisis became a focal point on social media at the very beginning of the bushfire season. A group of people argued that climate change had a major impact on the catastrophic and unprecedented bushfires. One of the hashtags they used on twitter to convey their beliefs and promote action on climate change was \#ClimateEmergency (Graham and Keller, 2020). Climate Council, which was one of the biggest climate organizations in Australia and was made up of climate scientists and experts, claimed that climate change not only worsened the bushfire season but also increased our cost of fighting fires (Climate Council, 2019). Meanwhile, in the first few weeks of 2020, another group of people brought a completely different argument onto the table. They claimed the cause of this bushfire season was not climate change, but arson. Besides, they attempted to replace the \#ClimateEmergency hashtag with the \#ArsonEmergency hashtag (Graham and Keller, 2020). Although police (Knaus, 2020) contradicted this controversial claim immediately, the spread didn't slow down at all. A research did by Dr Timothy Graham and Dr Tobias R. Keller (2020) from the Queensland University of Technology assessed around 300 twitter accounts driving the \#ArsonEmergency hashtag and found that a third of the accounts were suspicious with automated and inauthentic behaviour. They believed that the accounts were very likely ran by disinformation campaigns.
-
-By far, we have limited information on the cause of this catastrophic hazard in 2019-2020 (2019-20 Australian bushfires-frequently asked
-questions: a quick guide.). Bushfire investigation usually takes time and the result is not guaranteed. According to the research by Beale and Jones (2011), the cause was only known for 58.9\% of fires in history. Among the known cases, about 13\% were due to deliberate ignitions, 35\% by accidents and 6\% by natural, such as lightning. In a Jan 11, 2020 ABC article ``The truth about Australia's fires --- arsonists aren't responsible for many this season'' reports about Victoria:
+In a Jan 11, 2020 ABC article ``The truth about Australia's fires --- arsonists aren't responsible for many this season'' reports about Victoria:
 
 \begin{quote}
-``The Country Fire Authority (CFA) said the majority of fires were not arson-related. `Most of the fires have been caused by lightning,'' said Brett Mitchell, the CFA incident controller in Bairnsdale, in East Gippsland. Our intelligence suggests there are no deliberate lightings that we are aware of. Victoria Police had no arson figures available for this bushfire season, but said in the 12 months to September 2019, a dozen people had been arrested for causing bushfires."
+``The Country Fire Authority (CFA) said the majority of fires were not arson-related. `Most of the fires have been caused by lightning', said Brett Mitchell, the CFA incident controller in Bairnsdale, in East Gippsland. `Our intelligence suggests there are no deliberate lightings that we are aware of.' Victoria Police had no arson figures available for this bushfire season, but said in the 12 months to September 2019, a dozen people had been arrested for causing bushfires.''
 \end{quote}
+
+These words were spoken in response to a fierce war of hashtags on twitter ``\#ClimateEmergency'' vs ``\#ArsonEmergency''. In the ABC article most other states quoted numbers for arson and lightning, but Victoria's response was more vague. This prompted us to dig into open data resources to learn as much as we could about the cause of the bush fires in Victoria.
 
 \hypertarget{data}{%
 \section{Data sources and collation}\label{data}}
 
-Needs a couple of paragraphs describing the data sources.
+To track bushfires in Australia remotely with high temporal and spatial resolution, we used hotspot data taken from the Himawari-8 satellite. This data was filtered using the firepower information to keep only hotspots that were most likely fires. We clustered the hotspots in time and geographically, to estimate the ignition point and time of fires, and label fires. This data was supplemented with data from other sources: weather, fuel load distance to camp sites, roads and CFA stations. Weather information included temperature, rainfall, wind, and solar exposure from various sources. Rainfall was aggregated at different time intervals to provide cumulative moisture for locations.
+
+A model was trained to predict one of four causes (lightning, accident, arson, burning off) on the fire origins data from the Victorian Department of Environment, Land, Water and Planning (DELWP), which we supplemented with the same weather, fuel layer, distances data as the hot spot data. The performance of the model was very good: 75\% overall accuracy, 90\% accurate on lightning, 78\% for accidents, 54\% for arson which was mostly confused with accident, as would make sense. The most important contributors to distinguishing between lightning and arson (or accident) ignition were distance to CFA stations, roads and camp sites, and average wind speed over the past 12-24 months. Smaller distances were most likely arson or accident, as might be expected.
 
 \hypertarget{models}{%
-\section{Modeling}\label{models}}
+\section{Model predictions}\label{models}}
 
-\hypertarget{ignition}{%
-\subsection{Determining fire ignition point}\label{ignition}}
-
-Quick overview of spatiotemporal clustering algorithm
-
-\hypertarget{predicting-cause}{%
-\subsection*{Predicting cause}\label{predicting-cause}}
-\addcontentsline{toc}{subsection}{Predicting cause}
-
-Historical data
-
-Forest model
-
-Important predictors
-
-\hypertarget{results}{%
-\subsection{Results}\label{results}}
-
-bar chart of causes
+bar chart or table of causes
 
 Maps of predicted causes by month showing arson and accident
 
 \hypertarget{validation-of-predictions}{%
 \section*{Validation of predictions}\label{validation-of-predictions}}
 \addcontentsline{toc}{section}{Validation of predictions}
+
+Historical data cases histograms
 
 Show somewhere that it looks right?
 
@@ -190,7 +173,11 @@ Our predictions might disagree with this:
 French Island likely due to dry lightning
 \url{http://www.mpnews.com.au/2020/01/21/all-clear-after-island-fire-fright/}
 
+``Dry lightning is being blamed for the blaze which was thought to have started on the previous Wednesday and smouldered for three days before an east-wind change brought it surging to life.''
+
 zoom into map from app
+
+Link to the app
 
 \hypertarget{acknowledgements}{%
 \section{Acknowledgements}\label{acknowledgements}}
