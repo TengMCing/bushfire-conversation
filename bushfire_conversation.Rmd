@@ -88,7 +88,7 @@ zoom into map from app
 
 # Acknowledgements
 
-This analysis is based on a research paper co-authored by Di Cook from the Department of Econometrics and Business Statistics at the Monash Business School, and Weihao Li, a former Monash University Honours student in econometrics. The full analysis is available at https://github.com/TengMCing/bushfire-conversation.
+This analysis is based on a research paper co-authored by Di Cook and  Weihao Li, a Monash University Honours student, from the Department of Econometrics and Business Statistics at the Monash Business School, and Emily Dodwell, previously a member of AT&T Research in New York City. The full analysis is available at https://github.com/TengMCing/bushfire-conversation.
 
 The code used for the analysis can be found in the github repository [github.com/TengMCing/thesis](https://github.com/TengMCing/thesis).
 
