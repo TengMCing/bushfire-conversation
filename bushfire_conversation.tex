@@ -144,14 +144,25 @@ In a Jan 11, 2020 ABC article ``The truth about Australia's fires --- arsonists 
 ``The Country Fire Authority (CFA) said the majority of fires were not arson-related. `Most of the fires have been caused by lightning', said Brett Mitchell, the CFA incident controller in Bairnsdale, in East Gippsland. `Our intelligence suggests there are no deliberate lightings that we are aware of.' Victoria Police had no arson figures available for this bushfire season, but said in the 12 months to September 2019, a dozen people had been arrested for causing bushfires.''
 \end{quote}
 
-These words were spoken in response to a fierce war of hashtags on twitter ``\#ClimateEmergency'' vs ``\#ArsonEmergency''. In the ABC article most other states quoted numbers for arson and lightning, but Victoria's response was more vague. This prompted us to dig into open data resources to learn as much as we could about the cause of the bush fires in Victoria.
+These words were spoken in response to a fierce war of hashtags on twitter ``\#ClimateEmergency'' vs ``\#ArsonEmergency''. In the ABC article most other states quoted numbers for arson and lightning, but Victoria's response was more vague. This prompted us to dig into open data resources to learn as much as we could about the causes of the bush fires in Victoria.
 
 \hypertarget{data}{%
 \section{Data sources and collation}\label{data}}
 
-To track bushfires in Australia remotely with high temporal and spatial resolution, we used hotspot data taken from the Himawari-8 satellite. This data was filtered using the firepower information to keep only hotspots that were most likely fires. We clustered the hotspots in time and geographically, to estimate the ignition point and time of fires, and label fires. This data was supplemented with data from other sources: weather, fuel load distance to camp sites, roads and CFA stations. Weather information included temperature, rainfall, wind, and solar exposure from various sources. Rainfall was aggregated at different time intervals to provide cumulative moisture for locations.
+Historical fire origins data from the Victorian Department of Environment, Land, Water and Planning (DELWP), spanning 2000-2019 summers, suggests that most fires have been caused by lightning.
 
-A model was trained to predict one of four causes (lightning, accident, arson, burning off) on the fire origins data from the Victorian Department of Environment, Land, Water and Planning (DELWP), which we supplemented with the same weather, fuel layer, distances data as the hot spot data. The performance of the model was very good: 75\% overall accuracy, 90\% accurate on lightning, 78\% for accidents, 54\% for arson which was mostly confused with accident, as would make sense. The most important contributors to distinguishing between lightning and arson (or accident) ignition were distance to CFA stations, roads and camp sites, and average wind speed over the past 12-24 months. Smaller distances were most likely arson or accident, as might be expected.
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth]{bushfire_conversation_files/figure-latex/fireorigins-1} 
+
+}
+
+\caption{Causes of fires from 2000-2019. Lightning is most common cause. The number of fires is increasing, and this is mostly due to accidents.}\label{fig:fireorigins}
+\end{figure}
+
+To track bushfires in Australia remotely with high temporal and spatial resolution, we used hotspot data taken from the Himawari-8 satellite. This data was filtered using the firepower information to keep only hotspots that were most likely fires. We clustered the hotspots in time and space, to estimate the ignition point and time of fires, and to label individual fires. This data was supplemented with data from other sources: temperature, rainfall, wind, solar exposure, fuel load, distance to camp sites, roads and CFA stations. Rainfall was aggregated at different time intervals to provide cumulative moisture for locations.
+
+A model was trained to predict one of four causes (lightning, accident, arson, burning off) on the historical data, which was supplemented with the same weather, fuel layer, distances data as the hot spot data. The performance of the model was very good: 75\% overall accuracy, 90\% accurate on lightning, 78\% for accidents, 54\% for arson which was mostly confused with accident, as would make sense. The most important contributors to distinguishing between lightning and arson (or accident) ignition were distance to CFA stations, roads and camp sites, and average wind speed over the past 12-24 months. Smaller distances were most likely arson or accident, as might be expected.
 
 \hypertarget{models}{%
 \section{Model predictions}\label{models}}
@@ -182,7 +193,7 @@ Link to the app
 \hypertarget{acknowledgements}{%
 \section{Acknowledgements}\label{acknowledgements}}
 
-This analysis is based on a research paper co-authored by Di Cook and Weihao Li, a Monash University Honours student, from the Department of Econometrics and Business Statistics at the Monash Business School, and Emily Dodwell, previously a member of AT\&T Research in New York City. The full analysis is available at \url{https://github.com/TengMCing/bushfire-conversation}.
+This analysis is based on a research paper co-authored by Di Cook and Weihao Li, a Monash University Honours student, from the Department of Econometrics and Business Statistics at the Monash Business School, and Emily Dodwell, previously a member of AT\&T Research in New York City. The full analysis is available at \url{https://github.com/TengMCing/bushfire-conversation}. Add ACEMS
 
 The code used for the analysis can be found in the github repository \href{https://github.com/TengMCing/thesis}{github.com/TengMCing/thesis}.
 

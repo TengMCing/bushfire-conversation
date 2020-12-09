@@ -24,15 +24,11 @@ knitr::opts_chunk$set(
   fig.pos = "H",
   fig.align = "center",
   cache = FALSE,
-  message = FALSE
+  message = FALSE,
+  warning = FALSE,
+  error = FALSE
 )
-library(tidyverse)
-library(forcats)
-#library(ggthemes)
 library(knitr)
-#library(patchwork)
-#library(gridExtra)
-#library(grid)
 ```
 
 # Introduction {#intro}
@@ -48,7 +44,7 @@ In a Jan 11, 2020 ABC article "The truth about Australia's fires — arsonists a
 
 > "The Country Fire Authority (CFA) said the majority of fires were not arson-related. 'Most of the fires have been caused by lightning', said Brett Mitchell, the CFA incident controller in Bairnsdale, in East Gippsland. 'Our intelligence suggests there are no deliberate lightings that we are aware of.' Victoria Police had no arson figures available for this bushfire season, but said in the 12 months to September 2019, a dozen people had been arrested for causing bushfires."
 
-These words were spoken in response to a fierce war of hashtags on twitter "#ClimateEmergency" vs "#ArsonEmergency". In the ABC article most other states quoted numbers for arson and lightning, but Victoria's response was more vague. This prompted us to dig into open data resources to learn as much as we could about the cause of the bush fires in Victoria. 
+These words were spoken in response to a fierce war of hashtags on twitter "#ClimateEmergency" vs "#ArsonEmergency". In the ABC article most other states quoted numbers for arson and lightning, but Victoria's response was more vague. This prompted us to dig into open data resources to learn as much as we could about the causes of the bush fires in Victoria. 
 
 <!-- We often hear commentary about voting patterns --- people in their 20s without kids are more likely to be left wing, migrants are more conservative, wealthier people tend to favour the conservative parties, and so on. These might be built on myth and stereotypes. There is open data available from each election and from regular national censuses; this data can be used to examine just what are the indicators for voting tendency.
 
@@ -56,9 +52,98 @@ Voting tendencies can change over time. For example, if wealth was a good predic
 
 # Data sources and collation {#data}
 
-To track bushfires in Australia remotely with high temporal and spatial resolution, we used hotspot data taken from the Himawari-8 satellite. This data was filtered using the firepower information to keep only hotspots that were most likely fires. We clustered the hotspots in time and geographically, to estimate the ignition point and time of fires, and label fires. This data was supplemented with data from other sources: weather, fuel load distance to camp sites, roads and CFA stations. Weather information included temperature, rainfall, wind, and solar exposure from various sources. Rainfall was aggregated at different time intervals to provide cumulative moisture for locations. 
+Historical fire origins data from the Victorian Department of Environment, Land, Water and Planning (DELWP), spanning 2000-2019 summers, suggests that most fires have been caused by lightning. 
 
-A model was trained to predict one of four causes (lightning, accident, arson, burning off) on the fire origins data from the Victorian Department of Environment, Land, Water and Planning (DELWP), which we supplemented with the same weather, fuel layer, distances data as the hot spot data. The performance of the model was very good: 75% overall accuracy, 90% accurate on lightning, 78% for accidents, 54% for arson which was mostly confused with accident, as would make sense. The most important contributors to distinguishing between lightning and arson (or accident) ignition were distance to CFA stations, roads and camp sites, and average wind speed over the past 12-24 months. Smaller distances were most likely arson or accident, as might be expected.
+```{r fireorigins, fig.width=10, fig.height=5, out.width="100%", fig.cap="Causes of fires from 2000-2019. Lightning is most common cause. The number of fires is increasing, and this is mostly due to accidents."}
+library(tidyverse)
+library(lubridate)
+library(ggthemes)
+library(rnaturalearth)
+library(patchwork)
+
+set.seed(357)
+
+# Read in training data
+training <- read_csv("data/training.csv")
+
+training <- training %>%
+  filter(!CAUSE %in% c("BURNING BUILDING",
+                       "WASTE DISPOSAL, INDUSTRIAL, SAWMILL, TIP",
+                       "WASTE DISPOSAL, DOMESTIC",
+                       "BURNING VEHICLE, MACHINE",
+                       "BURNING BUILDING")) %>%
+  filter(new_cause != "other") %>%
+  filter(new_cause != "relight")
+
+
+training <- select(training, -c(EVENTID:FIRE_NUM), -id, -CAUSE, -FOREST, -FOR_CODE, -FOR_CAT)
+
+training <- mutate(training,
+                   year = factor(year(FIRE_START)),
+                   month = factor(month(FIRE_START), levels = c(10,11,12,1,2,3)),
+                   day = factor(day(FIRE_START), levels = c(1:31)),
+                   wod = factor(wday(FIRE_START), levels = c(1:7)))
+
+training <- filter(training, month %in% c(10,11,12,1,2,3))
+
+training <- na.omit(training)
+
+training <- training %>% 
+  mutate(new_cause = ifelse(new_cause == "accidental_human", "accident", new_cause)) %>%
+  mutate(new_cause = ifelse(new_cause == "burning_off_human", "burning_off", new_cause)) %>%
+  mutate(new_cause = factor(new_cause)) %>%
+  mutate(FOR_TYPE = factor(FOR_TYPE))
+
+#training <- na.omit(training)
+
+training <- mutate(training,
+                   log_dist_cfa = log(dist_cfa),
+                   log_dist_camp = log(dist_camp),
+                   log_dist_road = log(dist_road),
+                   COVER = factor(COVER),
+                   HEIGHT = factor(HEIGHT))
+
+training <- rename(training, cause = new_cause)
+training <- mutate(training,
+                   cause = fct_relevel(cause,
+                                       "lightning",
+                                       "accident",
+                                       "arson",
+                                       "burning_off"))
+training <- na.omit(training)
+
+p1 <- training %>%
+        mutate(cause = factor(tools::toTitleCase(as.character(cause)), 
+     levels = c("Lightning", "Accident", "Arson", "Burning_off"))) %>%
+    ggplot() +
+     geom_histogram(aes(cause, fill = cause), stat = "count") +
+    theme_minimal(base_size = 14) +
+    ggtitle("Counts of ignitions by cause") +
+    theme(legend.position = "none") +
+    scale_fill_brewer(palette = "RdBu") +
+    xlab("Cause") +
+    ylab("Count") 
+  
+p2 <- training %>%
+  mutate(cause = factor(tools::toTitleCase(as.character(cause)), levels = c("Lightning", "Accident", "Arson", "Burning_off"))) %>%
+    ggplot() +
+  geom_bar(data = select(training, -cause), aes(as.Date(paste0(as.character(year), "-01-01")))) +
+    geom_bar(aes(as.Date(paste0(as.character(year), "-01-01")), fill = cause)) +
+    facet_wrap(~cause) +
+    theme_minimal(base_size = 14) +
+    ggtitle("Ignitions by year, by cause") +
+    theme(legend.position = "none") +
+    scale_fill_brewer(palette = "RdBu") +
+    xlab("Year") +
+    ylab("Count") +
+    scale_x_date(date_labels = "%y")
+
+p1 + p2  
+```
+
+To track bushfires in Australia remotely with high temporal and spatial resolution, we used hotspot data taken from the Himawari-8 satellite. This data was filtered using the firepower information to keep only hotspots that were most likely fires. We clustered the hotspots in time and space, to estimate the ignition point and time of fires, and to label individual fires. This data was supplemented with data from other sources: temperature, rainfall, wind, solar exposure, fuel load, distance to camp sites, roads and CFA stations. Rainfall was aggregated at different time intervals to provide cumulative moisture for locations. 
+
+A model was trained to predict one of four causes (lightning, accident, arson, burning off) on the historical data, which was supplemented with the same weather, fuel layer, distances data as the hot spot data. The performance of the model was very good: 75% overall accuracy, 90% accurate on lightning, 78% for accidents, 54% for arson which was mostly confused with accident, as would make sense. The most important contributors to distinguishing between lightning and arson (or accident) ignition were distance to CFA stations, roads and camp sites, and average wind speed over the past 12-24 months. Smaller distances were most likely arson or accident, as might be expected.
 
 # Model predictions {#models}
 
@@ -85,7 +170,7 @@ Link to the app
 
 # Acknowledgements
 
-This analysis is based on a research paper co-authored by Di Cook and  Weihao Li, a Monash University Honours student, from the Department of Econometrics and Business Statistics at the Monash Business School, and Emily Dodwell, previously a member of AT&T Research in New York City. The full analysis is available at https://github.com/TengMCing/bushfire-conversation.
+This analysis is based on a research paper co-authored by Di Cook and  Weihao Li, a Monash University Honours student, from the Department of Econometrics and Business Statistics at the Monash Business School, and Emily Dodwell, previously a member of AT&T Research in New York City. The full analysis is available at https://github.com/TengMCing/bushfire-conversation. Add ACEMS
 
 The code used for the analysis can be found in the github repository [github.com/TengMCing/thesis](https://github.com/TengMCing/thesis).
 
