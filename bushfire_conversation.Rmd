@@ -33,12 +33,6 @@ library(knitr)
 
 # Introduction {#intro}
 
-<!-- The 2019-2020 Australia bushfires, compared with other major bushfires in history, had a more devastating impact on the environment and properties. According to a report by Lisa Richards, Nigel Brew and Smith (2020), published by the Parliament of Australia, 3094 houses were destroyed and over 17M hectares of land burned. These two figures are the highest in history. 
-
-Discussion about the cause of this crisis became a focal point on social media at the very beginning of the bushfire season. A group of people argued that climate change had a major impact on the catastrophic and unprecedented bushfires. One of the hashtags they used on twitter to convey their beliefs and promote action on climate change was #ClimateEmergency (Graham and Keller, 2020). Climate Council, which was one of the biggest climate organizations in Australia and was made up of climate scientists and experts, claimed that climate change not only worsened the bushfire season but also increased our cost of fighting fires (Climate Council, 2019). Meanwhile, in the first few weeks of 2020, another group of people brought a completely different argument onto the table. They claimed the cause of this bushfire season was not climate change, but arson. Besides, they attempted to replace the #ClimateEmergency hashtag with the #ArsonEmergency hashtag (Graham and Keller, 2020). Although police (Knaus, 2020) contradicted this controversial claim immediately, the spread didn’t slow down at all. A research did by Dr Timothy Graham and Dr Tobias R. Keller (2020) from the Queensland University of Technology assessed around 300 twitter accounts driving the #ArsonEmergency hashtag and found that a third of the accounts were suspicious with automated and inauthentic behaviour. They believed that the accounts were very likely ran by disinformation campaigns.
-
-By far, we have limited information on the cause of this catastrophic hazard in 2019-2020 (2019-20 Australian bushfires-frequently asked
-questions: a quick guide.). Bushfire investigation usually takes time and the result is not guaranteed. According to the research by Beale and Jones (2011), the cause was only known for 58.9% of fires in history. Among the known cases, about 13% were due to deliberate ignitions, 35% by accidents and 6% by natural, such as lightning. -->
 
 In a Jan 11, 2020 ABC article "The truth about Australia's fires — arsonists aren't responsible for many this season" reports about Victoria:
 
@@ -46,9 +40,6 @@ In a Jan 11, 2020 ABC article "The truth about Australia's fires — arsonists a
 
 These words were spoken in response to a fierce war of hashtags on twitter "#ClimateEmergency" vs "#ArsonEmergency". In the ABC article most other states quoted numbers for arson and lightning, but Victoria's response was more vague. This prompted us to dig into open data resources to learn as much as we could about the causes of the bush fires in Victoria. 
 
-<!-- We often hear commentary about voting patterns --- people in their 20s without kids are more likely to be left wing, migrants are more conservative, wealthier people tend to favour the conservative parties, and so on. These might be built on myth and stereotypes. There is open data available from each election and from regular national censuses; this data can be used to examine just what are the indicators for voting tendency.
-
-Voting tendencies can change over time. For example, if wealth was a good predictor of conservative voting in the 2001 election, is it still a good predictor in 2019? Australia has changed in many ways over the last two decades. Rising house prices, country-wide improvements in education, an ageing population, and a decline in religious affiliation, are just some of the ways we have changed. At the same time, political power has moved back and forth between the two major parties. How much can we attribute changes in political power to changes in who we are?-->
 
 # Data sources and collation {#data}
 
@@ -243,7 +234,7 @@ In summary, the  ability to detect fire starts from remotely sensed hot spots ma
 
 # Acknowledgements
 
-This analysis is based on a research paper co-authored by Di Cook and  Weihao Li, a Monash University Honours student, from the Department of Econometrics and Business Statistics at the Monash Business School, and Emily Dodwell, previously a member of AT&T Research in New York City. The full analysis is available at https://github.com/TengMCing/bushfire-conversation. Add ACEMS
+This analysis is based on a research paper co-authored by Di Cook and  Weihao Li, a Monash University Honours student, from the Department of Econometrics and Business Statistics at the Monash Business School, and Emily Dodwell, previously a member of AT&T Research in New York City. The full analysis is available at https://github.com/TengMCing/bushfire-conversation. The Australian Centre of Excellence for Mathematics and Statistics supported Emily's travel to Australia to start this project.
 
 The code used for the analysis can be found in the github repository [github.com/TengMCing/thesis](https://github.com/TengMCing/thesis).
 
