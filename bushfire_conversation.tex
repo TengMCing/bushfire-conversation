@@ -193,20 +193,28 @@ When the fire ignitions are examined by month during the season, it can be seen 
 \section*{Validation of predictions}\label{validation-of-predictions}}
 \addcontentsline{toc}{section}{Validation of predictions}
 
-Historical data cases histograms
+In order to validate predictions, we have searched media releases and descriptions. Information is sparse to non-existent. Wikipedia's page \href{https://en.wikipedia.org/wiki/2019–20_Australian_bushfire_season}{2019--20 Australian bushfire season} reports
 
-Show somewhere that it looks right?
+\begin{quote}
+``On 21 November 2019, lightning strikes ignited a series of fires in East Gippsland''
+\end{quote}
 
-Our predictions might disagree with this:
+which is consistent with our predictions.
 
-French Island likely due to dry lightning
-\url{http://www.mpnews.com.au/2020/01/21/all-clear-after-island-fire-fright/}
+Close to Melbourne there was disturbing news of a bushfire in a high density koala habitat on French Island Jan 18. \href{http://www.mpnews.com.au/2020/01/21/all-clear-after-island-fire-fright/}{Mornington Peninsula News} reports:
 
+\begin{quote}
 ``Dry lightning is being blamed for the blaze which was thought to have started on the previous Wednesday and smouldered for three days before an east-wind change brought it surging to life.''
+\end{quote}
 
-zoom into map from app
+Our model predicted this to be arson (but remember arson is difficult to distinguish from accident) so it disagrees. If we zoom into a map of the area to the first detected hotspot it can be seen to be right on a road, which makes it plausible for this to actually have been human caused fire.
 
-Link to the app
+\includegraphics{french_island.png}
+
+\hypertarget{summary}{%
+\section{Summary}\label{summary}}
+
+In summary, the ability to detect fire starts from remotely sensed hot spots makes it possible to more rapidly predict fire cause, particularly when combined with weather, distance to human activity, vegetation information. Our analysis using open data supports that lightning is the most common cause of bushfires, in Victoria.
 
 \hypertarget{acknowledgements}{%
 \section{Acknowledgements}\label{acknowledgements}}
