@@ -34,13 +34,17 @@ library(knitr)
 # Introduction {#intro}
 
 
+The 2019-2020 Australia bushfires, compared with other major bushfires in history, had a more devastating impact on the environment and properties: 3094 houses were destroyed and over 17M hectares of land burned. Fortunately, fewer lives were lost.
+
 A Jan 11, 2020 ABC article "The truth about Australia's fires — arsonists aren't responsible for many this season" reports about Victoria:
 
-> "The Country Fire Authority (CFA) said the majority of fires were not arson-related. 'Most of the fires have been caused by lightning', said Brett Mitchell, the CFA incident controller in Bairnsdale, in East Gippsland. 'Our intelligence suggests there are no deliberate lightings that we are aware of.' Victoria Police had no arson figures available for this bushfire season, but said in the 12 months to September 2019, a dozen people had been arrested for causing bushfires."
+> *The Country Fire Authority (CFA) said the majority of fires were not arson-related. 'Most of the fires have been caused by lightning', said Brett Mitchell, the CFA incident controller in Bairnsdale, in East Gippsland. 'Our intelligence suggests there are no deliberate lightings that we are aware of.' Victoria Police had no arson figures available for this bushfire season, but said in the 12 months to September 2019, a dozen people had been arrested for causing bushfires.*
 
 These words were spoken in response to a fierce war of hashtags on Twitter: "#ClimateEmergency" vs "#ArsonEmergency". In the ABC article, most other states quoted numbers for arson and lightning, but Victoria's response was more vague. This prompted us to dig into open data resources to learn as much as we could about the causes of the bushfires in Victoria. 
 
-From our model predictions, using satellite hotspots data, weather, distance to roads, camp sites, fire stations, and fuel load, suggests that 80% of the fires in Victoria during the 2019-2020 season can be attributed to lightning. Only 4% due to arson, 14% through accidents, and 1% from burning off. 
+Historical data collected manually on Victorian fires from 2000-2019 attributes 41% of fires to lightning, 17% to arson, 34% from accidents and 7% from burning off. When this data is combined with information on weather, distance to roads, camp sites, CFA stations, and fuel load, as we might expect, we learn that proximity to human activity, and winds, tends to be the distinguishing factors between the causes. 
+
+Although the cause of the 2019-2020 season fires is not officially known, our model predictions, using satellite hotspots data, weather, distance to roads, camp sites, CFA stations, and fuel load, suggest that 82% of the fires in Victoria can be attributed to lightning. Only 4% due to arson, 14% through accidents, and 1% from burning off. A benefit of the hot spot data is that it provides eyes in locations that are hard for people to get to. Our methodology utilises open data and open source software that could be used for the rest of Australia, too. 
 
 <!-- 
 - The headline findings from your data
@@ -129,12 +133,12 @@ prediction <- read_csv("data/prediction_2019-2020.csv") %>%
 training_p <- training %>%
   group_by(cause) %>%
   summarise(n=n()) %>%
-  mutate(freq = round(n / sum(n),2)) %>%
+  mutate(freq = round(n / sum(n), 2)*100) %>%
   mutate(lon = 148, lat = -35)
 pred_p <- prediction %>%
   group_by(cause) %>%
   summarise(n=n()) %>%
-  mutate(freq = round(n / sum(n),2)) %>%
+  mutate(freq = round(n / sum(n), 2)*100) %>%
   mutate(lon = 148, lat = -35)
   
 ```
@@ -181,11 +185,11 @@ The model predicts the majority of fires in the 2019-2020 bushfires to be due to
 p3 <- training %>%
   ggplot() +
       #geom_density_2d(aes(x=lon, y=lat, colour=cause), contour_var = "ndensity") +
+      geom_sf(data = vic_map, fill = "grey98", col = "black") +
       geom_point(aes(x=lon, y=lat, colour=cause), alpha=0.1) + 
-      geom_sf(data = vic_map, fill = NA, col = "black") +
       facet_wrap(~cause, ncol=4) +
       scale_colour_brewer(palette = "RdBu") +
-      geom_text(data=training_p, aes(x=lon, y=lat, label=freq), size=6) + 
+      geom_text(data=training_p, aes(x=lon, y=lat, label=paste0(freq, "%")), size=6) + 
       ggtitle("Historical causes collected manually") +
     theme_map(base_size = 14) +
     theme(legend.position = "none",
@@ -193,11 +197,11 @@ p3 <- training %>%
     guides(fill = guide_legend(reverse = T)) 
 
 p4 <- ggplot() +
-  geom_sf(data = vic_map, fill = NA, col = "black") +
+  geom_sf(data = vic_map, fill = "grey98", col = "black") +
   geom_point(data=prediction, aes(x=lon, y=lat, colour = cause), alpha = 0.5) +
   scale_colour_brewer(palette = "RdBu") +
   facet_wrap(~cause, ncol=4) +
-  geom_text(data=pred_p, aes(x=lon, y=lat, label=freq), size=6) + 
+  geom_text(data=pred_p, aes(x=lon, y=lat, label=paste0(freq, "%")), size=6) + 
   ggtitle("2019-2020 predictions, using ignition location from hotspots") +
   theme_map(base_size = 14) +
   theme(legend.position = "none") 
@@ -213,8 +217,8 @@ p5 <- prediction %>%
   mutate(mon = month(time, label = TRUE)) %>%
   mutate(mon = factor(mon, levels = c("Oct", "Nov", "Dec", "Jan", "Feb", "Mar"))) %>%
   ggplot() +
-  geom_sf(data = vic_map, fill = NA, col = "black") +
-  geom_point(aes(x=lon, y=lat, colour = cause)) +
+  geom_sf(data = vic_map, fill = "grey98", col = "black") +
+  geom_point(aes(x=lon, y=lat, colour = cause), size=2) +
   scale_colour_brewer(palette = "RdBu") +
   facet_grid(cause~mon) +
   #ggtitle("2019-2020 predictions, using ignition location from hotspots") +
@@ -231,11 +235,11 @@ In order to validate predictions, we have searched media releases and descriptio
 
 which is consistent with our predictions.  
 
-Close to Melbourne there was disturbing news of a bushfire in a high density koala habitat on French Island Jan 18. [Mornington Peninsula News](http://www.mpnews.com.au/2020/01/21/all-clear-after-island-fire-fright/) reports: 
+Close to Melbourne there was disturbing news of a bushfire in a high density koala habitat on French Island on Jan 18. [Mornington Peninsula News](http://www.mpnews.com.au/2020/01/21/all-clear-after-island-fire-fright/) reports: 
 
-> "Dry lightning is being blamed for the blaze which was thought to have started on the previous Wednesday and smouldered for three days before an east-wind change brought it surging to life."
+> *Dry lightning is being blamed for the blaze which was thought to have started on the previous Wednesday and smouldered for three days before an east-wind change brought it surging to life.*
 
-Our model predicted this to be arson (but remember arson is difficult to distinguish from accident), so it disagrees. If we zoom into a map of the area to the first detected hotspot it can be seen to be right on a road, which makes it plausible for this to actually have been a human-caused fire.   
+Contrary to this, our model predicts this to be arson or accident with 72% confidence. The other data about this ignition, used in our model prediction, was that it is non-forest, 3m to a road, quite a warm day (21-37$^o$C), moderate winds and no rain. If we zoom into a map of the area to the first detected hotspot it can be seen to be right near a road, making plausible evidence for this to actually have been a human-caused fire. 
 
 ![](french_island.png)
 
@@ -245,7 +249,7 @@ In summary, the  ability to detect fire starts from remotely sensed hot spots ma
 
 # Acknowledgements
 
-This analysis is based on a research paper co-authored by Di Cook and Weihao Li, a Monash University Honours student, from the Department of Econometrics and Business Statistics at the Monash Business School, and Emily Dodwell, former Principal Inventive Scientist at AT&T Labs Research in New York City. The full analysis is available at https://github.com/TengMCing/bushfire-conversation. The Australian Centre of Excellence for Mathematics and Statistics supported Emily's travel to Australia to start this project.
+This analysis is based on a research paper co-authored by Professor Di Cook and Weihao Li, a Monash University Honours student, from the Department of Econometrics and Business Statistics at the Monash Business School, and Emily Dodwell, former Principal Inventive Scientist at AT&T Labs Research in New York City. The full analysis is available at https://github.com/TengMCing/bushfire-conversation. The Australian Centre of Excellence for Mathematics and Statistics supported Emily's travel to Australia to start this project.
 
 The code used for the analysis can be found in the github repository [github.com/TengMCing/thesis](https://github.com/TengMCing/thesis).
 
