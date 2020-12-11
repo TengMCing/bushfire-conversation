@@ -249,7 +249,7 @@ In summary, the  ability to detect fire starts from remotely sensed hot spots ma
 
 # Acknowledgements
 
-This analysis is based on thesis research conducted by Weihao Li, a Monash University Honours student, under the supervision of  Professor Di Cook and from the Department of Econometrics and Business Statistics at the Monash Business School, and Emily Dodwell, former Principal Inventive Scientist at AT&T Labs Research in New York City. The full analysis is available at https://github.com/TengMCing/bushfire-conversation. The Australian Centre of Excellence for Mathematical and Statistical Frontiers supported Emily's travel to Australia to start this project.
+This analysis is based on thesis research conducted by Weihao Li, a Monash University Honours student, under the supervision of Professor Di Cook from the Department of Econometrics and Business Statistics at the Monash Business School, and Emily Dodwell, former Principal Inventive Scientist at AT&T Labs Research in New York City. The full analysis is available at https://github.com/TengMCing/bushfire-conversation. The Australian Centre of Excellence for Mathematical and Statistical Frontiers supported Emily's travel to Australia to start this project.
 
 The code used for the analysis can be found in the github repository [github.com/TengMCing/thesis](https://github.com/TengMCing/thesis).
 
