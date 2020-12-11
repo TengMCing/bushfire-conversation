@@ -1,5 +1,5 @@
 ---
-title: "Yes, 2019-2020 Victorian bushfires were most likely caused by lightning but there's more to be learned from open data"
+title: "Yes, 2019-2020 Victorian bushfires were most likely caused by lightning and there's we can learn from open data"
 author: Di Cook, Weihao Li, Emily Dodwell
 toc: false
 bibliography: references.bib
@@ -39,6 +39,17 @@ In a Jan 11, 2020 ABC article "The truth about Australia's fires — arsonists a
 > "The Country Fire Authority (CFA) said the majority of fires were not arson-related. 'Most of the fires have been caused by lightning', said Brett Mitchell, the CFA incident controller in Bairnsdale, in East Gippsland. 'Our intelligence suggests there are no deliberate lightings that we are aware of.' Victoria Police had no arson figures available for this bushfire season, but said in the 12 months to September 2019, a dozen people had been arrested for causing bushfires."
 
 These words were spoken in response to a fierce war of hashtags on twitter "#ClimateEmergency" vs "#ArsonEmergency". In the ABC article most other states quoted numbers for arson and lightning, but Victoria's response was more vague. This prompted us to dig into open data resources to learn as much as we could about the causes of the bush fires in Victoria. 
+
+From our model predictions, using satellite hotspots data, weather, distance to roads, camp sites, fire stations, and fuel load, suggests that 80% of the fires in Victoria during the 2019-2020 season can be attributed to lightning. Only 4% due to arson, 14% through accidents, and 1% from burning off. 
+
+<!-- 
+- The headline findings from your data
+
+- A little essential context, such as around the extent of burning from the Black Summer fires
+
+- State your "take-home message" for the reader in a sentence or two. e.g. answer the question "why should readers care about this".
+-->
+
 
 
 # Data sources and collation {#data}
