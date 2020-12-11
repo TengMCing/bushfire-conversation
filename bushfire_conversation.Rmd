@@ -231,7 +231,7 @@ p5
 
 In order to validate predictions, we have searched media releases and descriptions. Information is sparse to non-existent. Wikipedia's page [2019–20 Australian bushfire season](https://en.wikipedia.org/wiki/2019–20_Australian_bushfire_season) reports 
 
->"On 21 November 2019, lightning strikes ignited a series of fires in East Gippsland"
+>*On 21 November 2019, lightning strikes ignited a series of fires in East Gippsland*
 
 which is consistent with our predictions.  
 
